@@ -24,19 +24,26 @@ function ChatApp() {
     );
   }
 
+  const enterChat = () => {
+    if (room.trim()) {
+      setIsInChat(true);
+    }
+  };
+
   return (
     <AppWrapper isAuth={isAuth} setIsAuth={setIsAuth} setIsInChat={setIsInChat}>
       {!isInChat ? (
         <div className="room">
           <label> Type room name: </label>
-          <input onChange={(e) => setRoom(e.target.value)} />
-          <button
-            onClick={() => {
-              setIsInChat(true);
+          <input
+            onChange={(event) => setRoom(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                enterChat();
+              }
             }}
-          >
-            Enter Chat
-          </button>
+          />
+          <button onClick={enterChat}>Enter Chat</button>
         </div>
       ) : (
         <Chat room={room} />
